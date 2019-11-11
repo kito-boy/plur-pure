@@ -3,7 +3,9 @@ import { imgUrls } from "./imgUrls.js";
 
 (function() {
   const ROOT = document.querySelector(".slider"),
-        LENG = imgUrls.length;
+        LENG = imgUrls.length,
+        TRIGGER = document.querySelector('.slider__trigger'),
+        INFO = document.querySelector('.info-panel');
   let index = 0,   
       timerId = null;
   
@@ -47,11 +49,6 @@ import { imgUrls } from "./imgUrls.js";
     counter();
   }
 
-
-  function mainLoop() {
-    timerId = setInterval(move, 3000);
-  }
-
   document.addEventListener('keydown', (event) => {
     const keyName = event.key;
     if (event.defaultPrevented){
@@ -63,10 +60,24 @@ import { imgUrls } from "./imgUrls.js";
       move(false);
       timerReset();
     }
-  });
+  })
+
+  TRIGGER.onmouseenter = function() {
+    INFO.classList.add('info-panel--hover');
+  }
+
+  TRIGGER.onmouseclick = function() {
+    INFO.classList.add('info-panel--hover');
+  }
+
+  INFO.onmouseleave = function() {
+    INFO.classList.remove('info-panel--hover');
+  }
+
+
 
   initializeSlider();
   counter();
-  mainLoop();
-
+  timerId = setInterval(move, 3000);
+  
 }());

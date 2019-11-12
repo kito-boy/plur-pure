@@ -3,50 +3,46 @@ import { imgUrls } from "./imgUrls.js";
 
 (function() {
   const ROOT = document.querySelector(".slider"),
-        LENG = imgUrls.length,
-        TRIGGER = document.querySelector('.slider__trigger'),
-        INFO = document.querySelector('.info-panel');
+        triggerButton = document.querySelector('.slider__trigger'),
+        infoPanel = document.querySelector('.info-panel');
+
   let index = 0,   
       timerId = null;
   
-  function counter() {
-    document.querySelector('.slider__counter').innerText = (index + 1) + ' / ' + LENG;
+  function updateCounter() {
+    document.querySelector('.slider__counter').innerText = (index + 1) + ' / ' + imgUrls.length;
   }
 
-  function timerReset() {
+  function resetTimer() {
       clearInterval(timerId);
-      timerId = setInterval(() => move(), 3000);
+      timerId = setInterval(() => moveSlider(), 4000);
   }
 
-  function initializeSlider() {
-    for (let i = 0; i < LENG; i++) {
+  function initializeSlider() {    
+    imgUrls.forEach ( (url, index) => {
       let el = document.createElement('img');
-      el.classList.add('slider__item--hidden');
       el.classList.add('slider__item');
       ROOT.appendChild(el);
-    }
+    })
     ROOT.children[0].src = imgUrls[0]; 
     ROOT.children[0].alt = 1; 
-    ROOT.children[0].classList.remove('slider__item--hidden'); 
+    ROOT.children[0].classList.add('slider__item--fadein'); 
   }
 
-  function move(forward = true) {
+  function moveSlider(forward = true) {
     let indexPrev = index;
-    index = forward ? (index === LENG - 1 ? 0 : index + 1)
-                    : (index === 0 ? LENG - 1 : index - 1);
+    index = forward ? (index === imgUrls.length - 1 ? 0 : index + 1)
+                    : (index === 0 ? imgUrls.length - 1 : index - 1);
 
     if (ROOT.children[index].src == "") {
       ROOT.children[index].src = imgUrls[index];
       ROOT.children[index].alt = index + 1; 
     } 
-    ROOT.children[indexPrev].classList.toggle('slider__item--hidden',false);  
     ROOT.children[indexPrev].classList.toggle('slider__item--fadeout');
     ROOT.children[indexPrev].classList.toggle('slider__item--fadein', false);
-    ROOT.children[index].classList.toggle('slider__item--hidden', false); 
     ROOT.children[index].classList.toggle('slider__item--fadeout', false); 
     ROOT.children[index].classList.toggle('slider__item--fadein');
-    
-    counter();
+    updateCounter();
   }
 
   document.addEventListener('keydown', (event) => {
@@ -54,30 +50,26 @@ import { imgUrls } from "./imgUrls.js";
     if (event.defaultPrevented){
       return;
     } else if (keyName === 'ArrowRight') {
-      move();
-      timerReset();
+      moveSlider();
+      resetTimer();
     } else if (keyName === 'ArrowLeft') {
-      move(false);
-      timerReset();
+      moveSlider(false);
+      resetTimer();
     }
   })
 
-  TRIGGER.onmouseenter = function() {
-    INFO.classList.add('info-panel--hover');
+  triggerButton.onmouseenter = function() {
+    infoPanel.classList.add('info-panel--isActive');
   }
-
-  TRIGGER.onmouseclick = function() {
-    INFO.classList.add('info-panel--hover');
+  triggerButton.onmouseclick = function() {
+    infoPanel.classList.add('info-panel--isActive');
   }
-
-  INFO.onmouseleave = function() {
-    INFO.classList.remove('info-panel--hover');
+  infoPanel.onmouseleave = function() {
+    infoPanel.classList.remove('info-panel--isActive');
   }
-
-
 
   initializeSlider();
-  counter();
-  timerId = setInterval(move, 3000);
-  
+  updateCounter();
+  resetTimer();
+
 }());

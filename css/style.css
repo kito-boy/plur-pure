@@ -54,7 +54,7 @@ body {
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background-color: #dddddd;
+  background-color: #d2d4d4;
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -89,17 +89,20 @@ body {
   -o-object-fit: cover;
      object-fit: cover;
   position: absolute;
+  visibility: hidden;
 }
 
 .slider__item--fadein {
-  -webkit-animation: 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) 1 fade-in;
-          animation: 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) 1 fade-in;
+  -webkit-animation: 1.5s cubic-bezier(0.445, 0.05, 0.55, 0.95) 1 fade-in;
+          animation: 1.5s cubic-bezier(0.445, 0.05, 0.55, 0.95) 1 fade-in;
+  visibility: visible;
 }
 
 .slider__item--fadeout {
-  -webkit-animation: 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) 1 fade-out;
-          animation: 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) 1 fade-out;
+  -webkit-animation: 1.5s cubic-bezier(0.445, 0.05, 0.55, 0.95) 1 fade-out;
+          animation: 1.5s cubic-bezier(0.445, 0.05, 0.55, 0.95) 1 fade-out;
   opacity: 0;
+  visibility: visible;
 }
 
 .slider__item--hidden {
@@ -112,7 +115,7 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #f0f0f0;
+  background-color: rgba(212, 212, 211, 0.98);
   overflow: hidden;
   width: 100%;
   height: 0;
@@ -124,7 +127,7 @@ body {
   padding-top: 24px;
 }
 
-.info-panel--hover {
+.info-panel--isActive {
   height: 30%;
   opacity: 1;
 }
